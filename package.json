@@ -1,0 +1,29 @@
+{
+  "name": "kata-kasar",
+  "version": "1.0.0",
+  "description": "Filter badwords in Bahasa and English words",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joshuamanly/kata-kasar.git"
+  },
+  "keywords": [
+    "badwords",
+    "filter",
+    "censor",
+    "profanity",
+    "indonesia",
+    "english",
+    "moderation",
+    "clean-text"
+  ],
+  "author": "Joshua Manly Punyanan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/joshuamanly/kata-kasar/issues"
+  },
+  "homepage": "https://github.com/joshuamanly/kata-kasar#readme"
+}
