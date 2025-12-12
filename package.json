@@ -20,6 +20,7 @@
     "moderation",
     "clean-text"
   ],
+  "type": "module",
   "author": "Joshua Manly Punyanan",
   "license": "MIT",
   "bugs": {
