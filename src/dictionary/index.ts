@@ -1,8 +1,8 @@
 import bl from "./blacklist.json" with { type: "json" };
 import wl from "./whitelist.json" with { type: "json" };
 
-export const blacklist = new Set<string>(bl);
-export const whitelist = new Set<string>(wl);
+export const blacklist = new Set<string>(bl.id.concat(bl.en));
+export const whitelist = new Set<string>(wl.id.concat(wl.en));
 
 export function addBlacklist(words: string | string[]) {
     if (!Array.isArray(words)) words = [words];

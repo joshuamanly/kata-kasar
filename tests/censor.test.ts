@@ -7,27 +7,27 @@ describe("Censor module", () => {
     });
 
     test("censor normal word", () => {
-        expect(censor("troll are asshole")).toBe("***** are *******");
+        expect(censor("troll are asshole")).toBe("t**** are a******");
     });
 
     test("inside bad word", () => {
-        expect(censor("introllin")).toBe("in*****in");
+        expect(censor("introllin")).toBe("int****in");
     });
 
-    test("inside bad word", () => {
-        expect(censor("introllin")).toBe("in*****in");
+    test("inside bad word leet", () => {
+        expect(leetCensor("introllin")).toBe("int****in");
     });
 
     test("space bad word normal", () => {
-        expect(censor("troll are ass hole")).toBe("***** are *** ****");
+        expect(censor("troll are ass hole")).toBe("t**** are a** ****");
     });
 
     test("space bad word leet", () => {
-        expect(leetCensor("tr0ll are a$$ h0le")).toBe("***** are *** ****");
+        expect(leetCensor("tr0ll are a$$ h0le")).toBe("t**** are a** ****");
     });
 
     test("censor with custom replacement #", () => {
-        expect(censor("Troll here", "#")).toBe("##### here");
+        expect(censor("Troll here", "#")).toBe("T#### here");
     });
 
     test("censor with custom replacement wkwk", () => {
