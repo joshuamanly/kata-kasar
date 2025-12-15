@@ -3,7 +3,7 @@ import { censor, leetCensor } from "../src/core/censor.js";
 
 describe("Censor module", () => {
     beforeAll(() => {
-        addBlacklist(["asshole", "troll"]);
+        addBlacklist(["asshole", "troll"], "en");
     });
 
     test("censor normal word", () => {

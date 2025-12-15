@@ -3,7 +3,7 @@ import { flag, leetFlag } from "../src/core/flag.js";
 
 describe("Flag module", () => {
     beforeAll(() => {
-        addBlacklist(["asshole", "troll"]);
+        addBlacklist(["asshole", "troll"], "en");
     });
 
     test("flag normal word", () => {

@@ -3,7 +3,7 @@ import { filter, leetFilter } from "../src/core/filter.js";
 
 describe("Filter module", () => {
     beforeAll(() => {
-        addBlacklist(["asshole", "troll"]);
+        addBlacklist(["asshole", "troll"], "en");
     });
 
     test("filter normal word", () => {

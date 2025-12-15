@@ -3,7 +3,7 @@ import { extract, leetExtract } from "../src/core/extract.js";
 
 describe("Extract module", () => {
     beforeAll(() => {
-        addBlacklist(["asshole", "troll"]);
+        addBlacklist(["asshole", "troll"], "en");
     });
 
     test("extract normal keywords", () => {
