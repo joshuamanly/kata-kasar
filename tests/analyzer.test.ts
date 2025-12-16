@@ -47,7 +47,6 @@ describe("Analyzer Module", () => {
         test("should return DOUBT for fuzzy match with diff start char (Denis vs penis)", () => {
             const result = analyze("Denis");
             expect(result.isProfane).toBe(true);
-            // Matches adonis (white) and penis (black), non-superseding.
             expect(result.data.length).toBeGreaterThanOrEqual(1);
             const blackData = result.data.find(d => d.category === "BLACKLIST");
             expect(blackData).toBeDefined();
@@ -74,8 +73,6 @@ describe("Analyzer Module", () => {
         test("should return correct data for mixed confidence (den1s fuck)", () => {
             const result = analyze("den1s fuck");
             expect(result.isProfane).toBe(true);
-            // Expect at least 3 (denis white? denis black, fuck black)
-            // Actually received 4 in previous run.
             expect(result.data.length).toBeGreaterThanOrEqual(3);
 
             const denisData = result.data.find(d => d.word === "denis" && d.category === "BLACKLIST");
@@ -112,7 +109,6 @@ describe("Analyzer Module", () => {
             const result = analyze("cllss");
             expect(result.isProfane).toBe(false);
             expect(result.decision).toBe("ALLOW");
-            // Should have WHITELIST data now
             expect(result.data.some(d => d.category === "WHITELIST")).toBe(true);
             expect(result.filtered).toBe("cllss");
         });
@@ -120,7 +116,7 @@ describe("Analyzer Module", () => {
         test("should handle mixed case with whitelist (c11ls fuck)", () => {
             const result = analyze("c11ls fuck");
             expect(result.isProfane).toBe(true);
-            expect(result.data).toHaveLength(1); // ciils(white), fuck(black), ciilsfuck(black)
+            expect(result.data).toHaveLength(3);
 
             const ciilsData = result.data.find(d => d.word === "ciils" && d.category === "WHITELIST");
             expect(ciilsData).toBeDefined();
@@ -135,7 +131,6 @@ describe("Analyzer Module", () => {
         test("should return DOUBT for multiple tokens (Denis 8enis)", () => {
             const result = analyze("Denis 8enis");
             expect(result.isProfane).toBe(true);
-            // Received 4 items previously
             expect(result.data).toHaveLength(4);
 
             const d1_found = result.data.find(d => d.word === "denis" && d.category === "BLACKLIST");

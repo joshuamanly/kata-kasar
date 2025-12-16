@@ -62,7 +62,6 @@ export function analyze(text: string, options: AnalyzeOptions = {}): AnalyzeResu
     for (const candidate of uniqueCandidates) {
         let isWhitelisted = false;
 
-        // Exact whitelist check
         if (whitelist.has(candidate)) {
             data.push({
                 word: candidate,
@@ -77,7 +76,6 @@ export function analyze(text: string, options: AnalyzeOptions = {}): AnalyzeResu
         let bestWhitelistDist = Infinity;
         let bestWhitelistWord: string | null = null;
 
-        // Fuzzy Whitelist Check (for allow-listing purposes)
         for (const goodword of whitelist) {
             if (Math.abs(candidate.length - goodword.length) > 3) continue;
             const wDist = distance(candidate, goodword);
@@ -106,7 +104,6 @@ export function analyze(text: string, options: AnalyzeOptions = {}): AnalyzeResu
         let foundMatch = false;
 
         if (blacklist.has(candidate)) {
-            // Prioritize exact blacklist unless exact whitelist (handled above)
             foundMatch = true;
             candidateMatches.push(candidate);
             candidateMinDist = 0;
@@ -126,9 +123,7 @@ export function analyze(text: string, options: AnalyzeOptions = {}): AnalyzeResu
                 const dist = distance(candidate, badword);
 
                 if (dist <= 3) {
-                    // Check if superseded by whitelist
                     if (isWhitelisted && bestWhitelistDist <= dist) {
-                        // Whitelist match is better or equal. Ignore this blacklist match.
                         continue;
                     }
 
@@ -146,13 +141,6 @@ export function analyze(text: string, options: AnalyzeOptions = {}): AnalyzeResu
                 }
             }
         }
-
-        // Only add as BLACKLIST if foundMatch is true and NOT overridden by whitelist
-        // The loop above skips `foundMatch=true` if overridden fuzzy.
-        // But what about exact blacklist?
-        // If exact blacklist, foundMatch=true, dist=0.
-        // If fuzzy whitelist found, bestWhitelistDist >= 1 (otherwise exact whitelist caught it).
-        // So 0 < bestWhitelistDist. Blacklist wins. Correct.
 
         if (foundMatch) {
             isProfane = true;
