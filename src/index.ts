@@ -1,3 +1,4 @@
+export * from "./core/analyzer.js";
 export * from "./core/flag.js";
 export * from "./core/censor.js";
 export * from "./core/filter.js";
