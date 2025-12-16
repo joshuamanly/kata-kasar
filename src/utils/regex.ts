@@ -4,6 +4,6 @@ export function escapeRegExp(string: string) {
 
 export function createPattern(word: string): RegExp {
     const chars = word.split("");
-    const pattern = chars.map((c) => escapeRegExp(c)).join("\\s*");
+    const pattern = chars.map((c) => escapeRegExp(c)).join("[^a-zA-Z0-9]*");
     return new RegExp(pattern, "gi");
 }

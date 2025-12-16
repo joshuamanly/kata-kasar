@@ -7,7 +7,7 @@ describe("Censor module", () => {
     });
 
     test("censor normal word", () => {
-        expect(censor("troll are asshole")).toBe("t**** are a******");
+        expect(censor("troll are as*shole")).toBe("t**** are a*******");
     });
 
     test("inside bad word", () => {
