@@ -2,9 +2,16 @@
   "name": "kata-kasar",
   "version": "1.0.0",
   "description": "Filter badwords in Bahasa and English words",
-  "main": "index.js",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "test": "jest"
+    "build": "tsc",
+    "test": "jest",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -20,7 +27,6 @@
     "moderation",
     "clean-text"
   ],
-  "type": "module",
   "author": "Joshua Manly Punyanan",
   "license": "MIT",
   "bugs": {

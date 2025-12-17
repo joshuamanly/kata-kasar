@@ -1,5 +1,5 @@
 import { blacklist } from "../dictionary/index.js";
-import { escapeRegExp } from "../utils/regex.js";
+import { createPattern } from "../utils/regex.js";
 import { transleet } from "../utils/leet.js";
 
 
@@ -7,16 +7,17 @@ export function censor(text: string, replacement: string = "***"): string {
     let result = text;
 
     for (const word of blacklist) {
-        const chars = word.split("");
-        const pattern = chars.map((c) => escapeRegExp(c)).join("\\s*");
-        const regex = new RegExp(pattern, "gi");
+        const regex = createPattern(word);
 
         result = result.replace(regex, (match) => {
             if (replacement === "***" || replacement.length === 1) {
                 const charToUse = replacement === "***" ? "*" : replacement;
                 return match
                     .split("")
-                    .map((c) => (/\s/.test(c) ? c : charToUse))
+                    .map((c, index) => {
+                        if (index === 0) return c;
+                        return /\s/.test(c) ? c : charToUse;
+                    })
                     .join("");
             } else {
                 return replacement;
