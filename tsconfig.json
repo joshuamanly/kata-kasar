@@ -2,22 +2,23 @@
   "compilerOptions": {
     "module": "nodenext",
     "target": "esnext",
+    "rootDir": "src",
+    "outDir": "dist",
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
     "strict": true,
-    "jsx": "react-jsx",
     "verbatimModuleSyntax": true,
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
-    "skipLibCheck": true,
+    "skipLibCheck": true
   },
   "include": [
-    "src",
-    "tests"
+    "src"
   ],
   "exclude": [
-    "dist"
+    "dist",
+    "tests"
   ]
 }
