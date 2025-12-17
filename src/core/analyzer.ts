@@ -26,7 +26,7 @@ export type AnalyzeResult = {
 
 const MAX_LENGTH = 100;
 const MIN_LENGTH = 3;
-const ALLOWED_REGEX = /^[a-zA-Z0-9\-_@ ]+$/;
+const ALLOWED_REGEX = /^[\s\S]+$/;
 
 export function analyze(text: string, options: AnalyzeOptions = {}): AnalyzeResult {
     const { type = 'text', threshold = 3 } = options;

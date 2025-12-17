@@ -22,6 +22,13 @@ describe("Analyzer Module", () => {
             expect(result.data).toHaveLength(0);
             expect(result.filtered).toBe("a".repeat(101));
         });
+
+        test("should accept special characters", () => {
+            const result = analyze("hello!");
+            expect(result.error).toBeUndefined();
+            expect(result.decision).toBe("ALLOW");
+            expect(result.filtered).toBe("hello!");
+        });
     });
 
     describe("Confidence Logic", () => {
