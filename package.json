@@ -25,7 +25,8 @@
     "indonesia",
     "english",
     "moderation",
-    "clean-text"
+    "clean-text",
+    "kata-kasar"
   ],
   "author": "Joshua Manly Punyanan",
   "license": "MIT",
