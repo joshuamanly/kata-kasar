@@ -217,8 +217,16 @@ export function analyze(text: string, options: AnalyzeOptions = {}): AnalyzeResu
             const dist = distance(nToken, badword);
 
             if (dist <= 3) {
+                // Check if whitelist overrides this
                 if (isWhitelisted && bestWhitelistDist <= dist) continue;
 
+                // Strictly enforce first character match for short words to prevent false positives
+                // e.g. "sss" vs "ass" (dist 1). "bat" vs "cat" (dist 1).
+                if (badword.length <= 3 && dist > 0 && nToken[0] !== badword[0]) {
+                    continue;
+                }
+
+                // Determine confidence
                 let confidence: 'DOUBT' | 'OPTIMIST' = 'DOUBT';
                 if (dist === 0 || nToken.includes(badword)) {
                     confidence = 'OPTIMIST';

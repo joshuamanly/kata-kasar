@@ -3,8 +3,8 @@ import { addBlacklist, addWhitelist } from "../src/dictionary/index.js";
 
 describe("Analyzer Module", () => {
     beforeAll(() => {
-        addBlacklist(["asshole", "troll", "fuck", "penis", "ass", "kontol", "pepk"], "en");
-        addWhitelist(["class", "adonis", "hola", "pak"], "en");
+        addBlacklist(["asshole", "troll", "fuck", "penis", "ass", "pepek"], "en");
+        addWhitelist(["class", "adonis", "hola"], "en");
     });
 
     describe("Validation", () => {
@@ -49,7 +49,6 @@ describe("Analyzer Module", () => {
             expect(result.isProfane).toBe(true);
             expect(result.isProfane).toBe(true);
             expect(result.data.length).toBeGreaterThanOrEqual(1);
-            // asshol3 -> asshole matches
             const match = result.data.find(d => d.matches.includes("asshole"));
             expect(match).toBeDefined();
             expect(match?.confidence).toBe("OPTIMIST");
@@ -191,7 +190,6 @@ describe("Analyzer Module", () => {
             const result = analyze("fuck asstt");
             expect(result.isProfane).toBe(true);
             expect(result.filtered).toBe("f*** a**tt");
-            // Check data integrity
             const fuck = result.data.find(d => d.word === "fuck");
             const ass = result.data.find(d => d.word === "ass");
             expect(fuck).toBeDefined();
@@ -201,8 +199,6 @@ describe("Analyzer Module", () => {
         test("should handle spaced profanity (fu ck -> fuck)", () => {
             const result = analyze("fu ck");
             expect(result.isProfane).toBe(true);
-            // f u   c k
-            // f (keep), u (mask), c (preceded by space -> keep), k (mask)
             expect(result.filtered).toBe("f* c*");
             expect(result.data[0].word).toBe("fuck");
         });
@@ -210,14 +206,10 @@ describe("Analyzer Module", () => {
         test("should handle obfuscated spaced profanity (f u c k -> f* * *)", () => {
             const result = analyze("f u c k");
             expect(result.isProfane).toBe(true);
-            // User rule: "if it a space, first char visible".
-            // f (keep). u (space before -> keep). c (space before -> keep). k (space before -> keep).
-            // So f u c k ?
             expect(result.filtered).toBe("f u c k");
         });
 
         test("should handle mixed allow/reject (class asstt)", () => {
-            // class safe. asstt -> ass (profane).
             const result = analyze("class asstt");
             expect(result.isProfane).toBe(true);
             expect(result.filtered).toBe("class a**tt");
@@ -238,17 +230,13 @@ describe("Analyzer Module", () => {
         test("should handle heavily obfuscated nested (f-u-c-k-a-s-s -> f-*-*-*-a-s-s)", () => {
             const result = analyze("f-u-c-k-a-s-s");
             expect(result.isProfane).toBe(true);
-            // Norm: fuckass.
-            // Match fuck: f keep. u,c,k mask. -> f-*-*-*
-            // Match ass: a keep. s,s mask. -> a-*-*
             expect(result.filtered).toBe("f-*-*-*-a-*-*");
         });
 
         test("kontl ppk", () => {
             const result = analyze("pepek sss");
-            console.log(result);
             expect(result.isProfane).toBe(true);
-            expect(result.filtered).toBe("k**** p**");
+            expect(result.filtered).toBe("p**** sss");
         });
     });
 });
